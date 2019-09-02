@@ -1,0 +1,302 @@
+sudo passwd root  给root（#系统管理员）用户设置密码
+$是普通管员，#是系统管理员
+su "king" 或者 exit回到用户权限
+su root就可以切换到root
+
+xshell连接时需要安装这两个 apt install openssh-server openssh-client 
+vi /etc/apt/sources.list
+deb http://mirrors.aliyun.com/kali kali-rolling main non-free contrib 
+deb-src http://mirrors.aliyun.com/kali kali-rolling main non-free contrib 
+
+apt install memcached
+service memcached start
+linux命令ps aux|grep xxx详解  (ps aux|grep memcached)查看进程
+/usr/bin/memcahed -u memcache start 手动启动（光标一直存在 ）
+/usr/bin/memcahed -u memcache -d start 后台启动
+ pgrep memcached查看进程的pid    
+killall -9 memcached杀死memcached所有进程
+查看memcached的默认端口netstat -an | more
+虚拟机的ip  192.168.179.128
+/usr/bin/memcached -u memcache -p 11212 -l 0.0.0.0. -d start
+telnet 192.168.179.128 11212
+-d：这个参数是让memcached在后台运行。
+-m：指定占用多少内存。以M为单位，默认为64M。
+-p：指定占用的端口。默认端口是11211。
+-l：别的机器可以通过哪个ip地址连接到我这台服务器。如果是通过service memcached start的方式，那么只能通过本机连接。如果想要让别的机器连接，就必须设置-l 0.0.0.0。
+如果想要使用以上参数来指定一些配置信息，那么不能使用service memcached start，而应该使用/usr/bin/memcached的方式来运行。比如/usr/bin/memcached -u memcache -m 1024 -p 11222 start。
+
+虚拟机安装在d盘的VMware_name下
+ufw enable 开启防火墙
+ufw disable 关闭防火墙
+ufw default deny 防火墙以禁止的方式打开 默认是关闭那些没有开启的端口
+ufw deny 端口号  关闭某个端口
+ufw allow 端口号 开启某个端口
+
+由于没有公钥，无法验证下列签名 ***
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 6AF0E1940624A220 #此处6AF0E1940624A220需要是错误提示的key
+
+'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.media',
+                'django.contrib.messages.context_processors.messages',
+                'front.context_processors.front_user',
+                'django.template.context_processors.csrf'
+            ],
+'builtins':[
+                'django.templatetags.static'
+            ]
+
+STATIC_URL = '/static/'
+# crtl+shift+r不使用缓存去加载页面
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR,"static")
+]
+使用方法
+<img src="{% static 'cms/img/4.jpg' %}" alt="">static目录下又一个cms目录下又一个img目录  cms是一个app  
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME':'orm_homework',
+        'USER': 'root',
+        'PASSWORD': '123456',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
+    }
+}
+
+TIME_ZONE = 'Asia/Shanghai'
+from django.utils.timezone import make_aware
+
+<meta name="csrf-token" content="{{ csrf_token }}">如果不是在表单中使用CSRF  就可以使用这种形式  会走到settings里面的CSRF上下文处理器
+如果是表单中使用  可以直接使用CSRF标签{% csrf_token %}
+
+# 优先从缓存中获取
+SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
+
+import django.core.cache import cache
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+        'KEY_FUNCTION': lambda key,prefix_key,version:"django:%s"%key
+    }
+}
+apt install lrzsz
+### 下载一个文件： 
+# sz filename 
+### 下载多个文件： 
+# sz filename1 filename2
+### 下载dir目录下的所有文件，不包含dir下的文件夹： 
+
+# sz dir/*
+### 直接键入rz命令即可
+
+# rz
+### 直接拖动文件到 xshell， 或者 SecureCRT 窗口即可
+
+deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse
+
+
+在Django中如何防御sql注入：
+
+使用ORM来做数据的增删改查。因为ORM使用的是参数化的形式执行sql语句的。
+如果万一要执行原生sql语句，那么建议不要拼接sql，而是使用参数化的形式。
+
+root用户下可以不用添加sudo
+apt install redis-server
+ps aux|grep redis
+sudo service redis-server start
+service redis-server restart重启服务
+sudo service redis-server stop
+redis-cli -h 127.0.0.1 -p 6379
+xshell 
+复制crtl+q
+粘贴crtl+v
+
+数组的操作
+lrange websites 0 -1
+lpush websites www.baidu.com
+rpush websites www.baidu.com
+
+cd /etc/redis/   
+vi redis.conf
+/requirepass   取消注释  设置redis的密码
+进入redis 操作redis的时候会显示没有权限   输入auth password(liua794658lxx@)或者进入服务的时候就指定
+redis-cli -p 6379 -h 127.0.0.1 -a liua794658lxx@
+
+
+
+lrem webistes -1  www.baidu.com删除指定的元素
+count > 0：从表头开始向表尾搜索，移除与value相等的元素，数量为count。
+count < 0：从表尾开始向表头搜索，移除与 value相等的元素，数量为count的绝对值。
+count = 0：移除表中所有与value 相等的值。
+
+lindex webistes 2 指定返回第几个元素
+lpop webistes 移除并返回列表key的头元素
+rpop webistes 移除并返回列表的尾元素
+llen key获取列表中的元素个数
+
+set集合的操作
+添加元素sadd set value1 value2....
+查看元素smembeers set
+移除元素srem set member...
+查看集合中的元素个数scard set
+获取多个集合的交集sinter set1 set2
+获取多个集合的并集sunion set1 set2
+获取多个集合的差集sdiff set1 set2
+
+hash哈希操作
+添加一个新值    hset key field value
+获取哈希中的field对应的值hget key field
+删除field中的某个field   hdel key field
+获取某个哈希中所有的field和value  hgetall key
+获取某个哈希中所有的field  hkeys key
+获取某个哈希中所有的值 hvals key
+获取某个哈希中所有的值   hlen field
+一次添加多个键值对 hmset person name xxx age 18 height 180  
+
+
+keys *查看所有key
+flushall 清空所有key
+
+apt install vsftpd
+vi /etc/ftpusers  注释root
+service vsftpd reload重新开启vsftpd 
+其他机器连接自己机器的redis
+ftplib上传文件出现ftplib.error_perm: 550 Permission denied错误
+1修改配置文件：vi /etc/vsftpd.conf
+ 
+2去掉“write_enable=YES”前面的#
+ 
+3重启vsftp服务器：sudo service vsftpd restart
+
+修改 vi?/etc/ssh/sshd_config
+
+找到# Authentication:
+LoginGraceTime 120
+
+#PasswordAuthentication no的注释去掉，并且将no修改为yes
+
+#PermitRootLogin prohibit-password的注释去掉 ,prohibit-password 改为yes
+
+改成
+
+# Authentication:
+LoginGraceTime 120
+PermitRootLogin yes
+StrictModes yes
+
+重新ssh服务器：sudo? /etc/init.d/ssh? restart
+
+重新连接接xshell
+
+SSH服务器拒绝了密码，xshell连不上虚拟机怎么办
+
+npm淘宝镜像 ： npm i -g cnpm --registry=https://registry.npm.taobao.org
+
+jupyter notebook
+
+E: 无法获得锁 /var/lib/dpkg/lock-frontend - open (11: 资源暂时不可用)
+E: Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), is another process using it?
+解决：
+sudo rm /var/cache/apt/archives/lock
+sudo rm /var/lib/dpkg/lock-frontend
+
+
+apt install curl（yum install curl）
+curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
+提示：
+export PATH="~/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+将pyenv添加到环境变量中 vim ~/.bashrc
+配置文件生效source ~/.bashrc
+检查是否安装成功echo $PATH;
+
+pyenv versions查看pyenv支持管理的python版本
+pyenv global 3.6.4默认版本
+
+source ~/.bashrc激活
+pyenv virtualenvs 　　　　　　　 　　　　　　　 # 列出所有虚拟环境
+pyenv activate django-env   (your_env_name) 　　 　　　　　　# 使用某虚拟环境
+pyenv uninstall your_env_name  　　 　　　　 # 卸载虚拟环境
+
+# 1、使用pip安装virtualenv
+pip install virtualenv
+# 2、创建虚拟环境
+pyenv virtualenv 3.6.4 虚拟环境名称
+# 3、切换虚拟环境
+pyenv activate 虚拟环境名称
+# 4. 退出虚拟环境，回到系统环境
+pyenv deactivate 　　　　　　　　　　　　　　　　
+
+
+
+apt-get install mysql-server mysql-common mysql-client  
+apt-get install libmysqld-dev安装mysqlclient之前需先安装这个   如果提示找不到包  升级apt apt update  aptupgrade
+apt-get install mycli         mysql 命令行补全工具 mycli
+
+python manage.py runserver 0.0.0.0:8000（如果启动正常   l浏览器访问不了需要在阿里云的服务器上把端口开设出来）
+
+
+Linux 安装python3.7.0
+1、安装依赖包           
+）首先安装gcc编译器，gcc有些系统版本已经默认安装，通过  gcc --version  查看，没安装的先安装gcc，yum -y install gcc
+2）安装其它依赖包，（注：不要缺少，否则有可能安装python出错，python3.7.0以下的版本可不装 libffi-devel ）
+yum -y install zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gdbm-devel db4-devel libpcap-devel xz-devel libffi-devel
+
+2）下载 wget https://www.python.org/ftp/python/3.7.0/Python-3.7.0.tgz
+3）、解压Python-3.7.0.tgz  tar -zxvf Python-3.7.0.tgz
+
+4、建立一个空文件夹，用于存放python3程序　　
+mkdir /usr/local/python3 
+
+5、执行配置文件，编译，编译安装　　　
+cd Python-3.7.0
+./configure --prefix=/usr/local/python3
+make && make install
+
+6、建立软连接　　
+ln -s /usr/local/python3/bin/python3.7 /usr/bin/python3
+ln -s /usr/local/python3/bin/pip3.7 /usr/bin/pip3
+
+7、测试一下python3是否可以用
+输入python3  或者  pip3 --version
+
+
+为了方便XShell或者CRT连接服务器，建议安装`OpenSSH`：
+    ```shell
+    sudo apt install openssh-server openssh-client
+    service ssh restart
+    ```
+
+
+错误:MySQL ERROR 1698 (28000) 
+1. 查看一下user表
+错误的起因就是在这里， root的plugin被修改成了auth_socket，
+用密码登陆的plugin应该是mysql_native_password。
+
+mysql> select user, plugin from mysql.user;
+
+2.命令:
+mysql> update mysql.user set authentication_string=PASSWORD('newPwd'), plugin='mysql_native_password' where user='root';
+Query OK, 1 row affected, 1 warning (0.00 sec)
+Rows matched: 1 Changed: 1 Warnings: 1
+
+mysql> flush privileges;
+Query OK, 0 rows affected (0.00 sec)
+
+3.重启服务，问题就解决了
