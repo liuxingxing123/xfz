@@ -22,12 +22,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '!@0*7z9ltln3xl3(6iq)%fhz18=p!+cq&f9vb5s=1i1u)pt*26'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', '47.95.141.140']
+ALLOWED_HOSTS = ['106.52.23.195','127.0.0.1']
 
 # Django-Debug-Toolbar相关的配置
-INTERNAL_IPS = ['127.0.0.1']
+INTERNAL_IPS = ['106.52.23.195','127.0.0.1']
 DEBUG_TOOLBAR_PANELS = [
     # 代表是哪个django版本
     'debug_toolbar.panels.versions.VersionsPanel',
@@ -121,7 +121,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': "xfz",
-        'HOST': '127.0.0.1',
+        'HOST': '106.52.23.195',
         'PORT': '3306',
         'USER': 'root',
         'PASSWORD': '123456'
