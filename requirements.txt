@@ -12,7 +12,7 @@ jieba==0.39
 jmespath==0.9.4
 mysqlclient==1.4.2.post1
 olefile==0.46
-Pillow==6.1.0
+Pillow==9.3.0
 PyMySQL==0.9.3
 python3-memcached==1.51
 pytz==2019.1
